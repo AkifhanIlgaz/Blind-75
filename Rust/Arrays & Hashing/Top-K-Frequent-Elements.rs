@@ -12,7 +12,7 @@ impl Solution {
 
         let mut x: Vec<(&i32, &i32)> = map.iter().collect();
         x.sort_by(|&a, &b| (b.1).cmp(&a.1));
-        dbg!(&x);
+
         let mut result = vec![];
 
         for i in 0..k {
