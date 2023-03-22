@@ -33,6 +33,7 @@ func main() {
 }
 
 func createFile(lang, extension string) {
+
 	directoryPath := path.Join(lang, directory)
 	fileName := file + extension
 
