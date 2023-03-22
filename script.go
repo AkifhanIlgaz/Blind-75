@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"sync"
 )
 
 var langExtensions = map[string]string{
@@ -18,6 +19,7 @@ var langExtensions = map[string]string{
 var (
 	directory string
 	file      string
+	wg        sync.WaitGroup
 )
 
 func main() {
@@ -26,13 +28,17 @@ func main() {
 	flag.StringVar(&file, "file", "", "Name of file")
 	flag.Parse()
 
+	wg.Add(len(langExtensions))
+
 	for lang, extension := range langExtensions {
 		go createFile(lang, extension)
 	}
-
+	
+	wg.Wait()
 }
 
 func createFile(lang, extension string) {
+	defer wg.Done()
 
 	directoryPath := path.Join(lang, directory)
 	fileName := file + extension
